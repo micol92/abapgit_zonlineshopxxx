@@ -1,0 +1,39 @@
+@Metadata.layer: #CUSTOMER
+@UI: {
+  headerInfo: {
+    typeName: 'MinimumDaysToDelive', 
+    typeNamePlural: 'MinimumDaysToDelives', 
+    title: {
+      type: #STANDARD, 
+      label: 'Minimum days to delivery', 
+      value: 'ProductGroup'
+    }
+  }
+}
+annotate view ZC_MinimumDaysToDelive with
+{
+  @UI.identification: [ {
+    position: 1 , 
+    label: 'ProductGroup'
+  } ]
+  @UI.lineItem: [ {
+    position: 1 , 
+    label: 'ProductGroup'
+  } ]
+  @UI.facet: [ {
+    id: 'ZI_MinimumDaysToDelive', 
+    purpose: #STANDARD, 
+    type: #IDENTIFICATION_REFERENCE, 
+    label: 'Minimum days to delivery', 
+    position: 1 
+  } ]
+  ProductGroup;
+  
+  @UI.identification: [ {
+    position: 2 
+  } ]
+  @UI.lineItem: [ {
+    position: 2 
+  } ]
+  WaitPrdInDays;
+}

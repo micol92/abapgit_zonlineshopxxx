@@ -1,0 +1,4 @@
+define service ZUI_MINIMUMDAYSTODELIVE {
+  expose ZC_MINIMUMDAYSTODELIVE_S as MinimumDaysToDelAll;
+  expose ZC_MINIMUMDAYSTODELIVE as MinimumDaysToDelive;
+}

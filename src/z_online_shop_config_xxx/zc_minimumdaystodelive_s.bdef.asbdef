@@ -1,0 +1,25 @@
+projection;
+strict;
+use draft;
+
+define behavior for ZC_MinimumDaysToDelive_S alias MinimumDaysToDelAll
+
+{
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+  use action SelectCustomizingTransptReq;
+
+  use association _MinimumDaysToDelive { create; with draft; }
+}
+
+define behavior for ZC_MinimumDaysToDelive alias MinimumDaysToDelive
+
+{
+  use update;
+  use delete;
+
+  use association _MinimumDaysToDelAll { with draft; }
+}

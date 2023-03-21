@@ -1,0 +1,58 @@
+managed with additional save implementation in class ZBP_I_MINIMUMDAYSTODELIVE_S unique;
+strict;
+with draft;
+
+define behavior for ZI_MinimumDaysToDelive_S alias MinimumDaysToDelAll
+draft table ZMINDAYS2DLV_D_S
+with unmanaged save
+lock master total etag LastChangedAtMax
+authorization master( global )
+
+{
+  update;
+  create;
+  delete;
+
+  draft action ( features : instance ) Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+  action ( features : instance ) SelectCustomizingTransptReq parameter D_SelectCustomizingTransptReqP result [1] $self;
+
+  association _MinimumDaysToDelive { create ( features : instance ); with draft; }
+}
+
+define behavior for ZI_MinimumDaysToDelive alias MinimumDaysToDelive
+persistent table ZMINDAYS2DLV_XXX
+draft table ZMINDAYS2DLV_X_D
+etag master Locallastchangedat
+lock dependent by _MinimumDaysToDelAll
+authorization dependent by _MinimumDaysToDelAll
+
+{
+  field ( mandatory : create )
+   ProductGroup;
+
+  field ( readonly )
+   SingletonID;
+
+  field ( readonly : update )
+   ProductGroup;
+
+
+  update( features : global );
+  delete( features : global );
+
+  mapping for ZMINDAYS2DLV_XXX
+  {
+    ProductGroup = PRODUCT_GROUP;
+    WaitPrdInDays = WAIT_PRD_IN_DAYS;
+    Locallastchangedat = LOCALLASTCHANGEDAT;
+    Changedat = CHANGEDAT;
+  }
+
+  association _MinimumDaysToDelAll { with draft; }
+
+  validation ValidateRecordChanges on save ##NOT_ASSIGNED_TO_DETACT { create; update; delete; }
+}
